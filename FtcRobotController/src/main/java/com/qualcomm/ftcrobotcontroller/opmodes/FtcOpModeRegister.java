@@ -33,6 +33,7 @@ package com.qualcomm.ftcrobotcontroller.opmodes;
 
 import com.qualcomm.ftcrobotcontroller.MyFiles.ExtendingArmOpMode;
 import com.qualcomm.ftcrobotcontroller.MyFiles.LinearTest;
+import com.qualcomm.ftcrobotcontroller.MyFiles.SimpleArmLinear;
 import com.qualcomm.ftcrobotcontroller.MyFiles.SimpleArmOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeManager;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeRegister;
@@ -77,6 +78,7 @@ public class FtcOpModeRegister implements OpModeRegister
         manager.register("8495OpMode", ExtendingArmOpMode.class);
 
         manager.register("Test", LinearTest.class);
+        manager.register("5953Linear", SimpleArmLinear.class);
 
     /*
      * Uncomment any of the following lines if you want to register an op mode.
