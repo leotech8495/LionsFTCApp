@@ -15,11 +15,7 @@ public class SimpleArmOpMode extends EventOpMode
     public void start()
     {
         robot = new SimpleArmRobot(hardwareMap, "left_side", "right_side", "arm");
-//        robot = new SimpleArmRobot(hardwareMap, "back_left", "back_right", "front_left", "front_right", "arm");
-//        robot.getFrontRightMotor().setDirection(DcMotor.Direction.REVERSE);
-//        robot.getBackRightMotor().setDirection(DcMotor.Direction.REVERSE);
-        robot.setReverseBackLeft(true);
-
+        robot.setReverseBackRight(true);
     }
 
     @Override
@@ -37,7 +33,7 @@ public class SimpleArmOpMode extends EventOpMode
         // on left stick move robot
         if (gamepad == gamepad1)
         {
-            robot.setLeftSpeed(-speedY);
+            robot.setLeftSpeed(speedY);
             telemetry.addData("StickLeft", speedY);
         }
     }
@@ -48,7 +44,7 @@ public class SimpleArmOpMode extends EventOpMode
         // on right stick move robot
         if (gamepad == gamepad1)
         {
-            robot.setRightSpeed(-speedY);
+            robot.setRightSpeed(speedY);
             telemetry.addData("StickRight", speedY);
         }
     }

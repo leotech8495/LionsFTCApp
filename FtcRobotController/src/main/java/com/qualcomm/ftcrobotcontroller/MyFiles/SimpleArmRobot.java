@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by ShirleyZulueta on 12/3/15.
@@ -18,23 +19,6 @@ public class SimpleArmRobot extends Robot
     private boolean reverseBackRight = false;
     private boolean reverseFrontRight = false;
     private boolean reverseFrontLeft = false;
-
-    public SimpleArmRobot()
-    {
-        super();
-    }
-
-    public SimpleArmRobot(HardwareMap hardwareMap, String bL, String bR, String fL, String fR, String arm)
-    {
-        // call super constructor
-        super(hardwareMap, bL, bR, fL, fR);
-        // connect motors with legacy module
-        mArm = hardwareMap.dcMotorController.get(arm);
-        // Changing run mode so we can use it (default its in "nxt mode")
-        mArm.setMotorChannelMode(1, DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
-        // switch to write mode, using legacy module only allows write or read at one time
-        mArm.setMotorControllerDeviceMode(DcMotorController.DeviceMode.WRITE_ONLY);
-    }
 
     public SimpleArmRobot(HardwareMap hardwareMap, String leftSide, String rightSide, String extender)
     {
@@ -91,6 +75,63 @@ public class SimpleArmRobot extends Robot
             running = true;
             timer.schedule(createNewTask(), seconds);
         }
+    }
+
+    @Override
+    public void turnRight(int seconds, double speed)
+    {
+        if (running)
+            return;
+
+        setRightSpeed(speed);
+        running = true;
+        new Timer().schedule(new TimerTask()
+        {
+            @Override
+            public void run()
+            {
+                running = false;
+                setRightSpeed(0);
+            }
+        }, seconds);
+    }
+
+    @Override
+    public void turnLeft(int seconds, double speed)
+    {
+        if (running)
+            return;
+
+        setLeftSpeed(speed);
+        running = true;
+        new Timer().schedule(new TimerTask()
+        {
+            @Override
+            public void run()
+            {
+                running = false;
+                setLeftSpeed(0);
+            }
+        }, seconds);
+    }
+
+    @Override
+    public void moveForward(int seconds, double speed)
+    {
+        if (running)
+            return;
+
+        setSpeed(1);
+        running = true;
+        new Timer().schedule(new TimerTask()
+        {
+            @Override
+            public void run()
+            {
+                running = false;
+                setSpeed(0);
+            }
+        }, seconds);
     }
 
     public boolean isReverseBackRight()
