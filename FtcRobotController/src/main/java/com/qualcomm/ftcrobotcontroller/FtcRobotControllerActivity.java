@@ -379,6 +379,9 @@ public class FtcRobotControllerActivity extends Activity
 
         controllerService.setCallback(callback);
         controllerService.setupRobot(eventLoop);
+
+        LinearLayout activeLayout = (LinearLayout) findViewById(R.id.included_header);
+        activeLayout.setBackgroundColor(getResources().getColor(R.color.bright_qcom_blue));
     }
 
     private FileInputStream fileSetup()

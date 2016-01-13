@@ -62,6 +62,13 @@ public class SimpleArmRobot extends Robot
         mLeftSide.setMotorPower(2, (isReverseFrontLeft() ? -speed : speed));
     }
 
+    @Override
+    public void setSpeed(double speed)
+    {
+        setRightSpeed(speed);
+        setLeftSpeed(speed);
+    }
+
     public void setArmSpeed(double speed)
     {
         mArm.setMotorPower(1, speed);
