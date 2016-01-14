@@ -29,12 +29,19 @@ public class LinearTest extends LinearOpMode
 
         waitForStart();
 
+        robot.setSpeed(0.3);
+
         while(opModeIsActive())
         {
             telemetry.addData("Clear", colorSensor.alpha());
             telemetry.addData("Red  ", colorSensor.red());
             telemetry.addData("Green", colorSensor.green());
             telemetry.addData("Blue ", colorSensor.blue());
+
+            if (colorSensor.red() > 200)
+            {
+                robot.setSpeed(0);
+            }
             waitOneFullHardwareCycle();
         }
         // do stuff
