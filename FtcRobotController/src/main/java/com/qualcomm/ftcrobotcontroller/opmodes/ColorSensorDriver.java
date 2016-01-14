@@ -88,8 +88,6 @@ public class ColorSensorDriver extends LinearOpMode
         while (opModeIsActive())
         {
 
-//                  enableLed(t.isPressed());
-
             switch (device)
             {
                 case HITECHNIC_NXT:
