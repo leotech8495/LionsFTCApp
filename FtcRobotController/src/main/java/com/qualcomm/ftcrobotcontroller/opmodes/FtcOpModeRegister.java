@@ -43,11 +43,11 @@ import com.qualcomm.robotcore.eventloop.opmode.OpModeRegister;
  */
 public class FtcOpModeRegister implements OpModeRegister
 {
-    private boolean mainTeam;
+    private boolean isRed;
 
-    public FtcOpModeRegister(boolean mainTeam)
+    public FtcOpModeRegister(boolean isRed)
     {
-        this.mainTeam = mainTeam;
+        this.isRed = isRed;
     }
 
     /**
@@ -76,8 +76,7 @@ public class FtcOpModeRegister implements OpModeRegister
 
         manager.register("5953OpMode", SimpleArmOpMode.class);
         manager.register("8495OpMode", ExtendingArmOpMode.class);
-
-        manager.register("Test", LinearTest.class);
+         manager.register("Test", LinearTest.class);
         manager.register("5953Linear", SimpleArmLinear.class);
 
     /*

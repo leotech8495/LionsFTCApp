@@ -110,6 +110,7 @@ public class FtcRobotControllerActivity extends Activity
     /////False sets it to 8495, True set its to 5953////////
     ////////////////////////////////////////////////////////
     private boolean mainTeam = false;
+    private boolean isRed = false;
 
     protected class RobotRestarter implements Restarter
     {
@@ -375,13 +376,27 @@ public class FtcRobotControllerActivity extends Activity
         modernRoboticsFactory.setXmlInputStream(fis);
         factory = modernRoboticsFactory;
 
-        eventLoop = new FtcEventLoop(factory, new FtcOpModeRegister(mainTeam), callback, this);
+        eventLoop = new FtcEventLoop(factory, new FtcOpModeRegister(isRed), callback, this);
 
         controllerService.setCallback(callback);
         controllerService.setupRobot(eventLoop);
 
-        LinearLayout activeLayout = (LinearLayout) findViewById(R.id.included_header);
+        final LinearLayout activeLayout = (LinearLayout) findViewById(R.id.included_header);
         activeLayout.setBackgroundColor(getResources().getColor(R.color.bright_qcom_blue));
+        activeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+                if (!isRed)
+                {
+                    isRed = true;
+                    view.setBackgroundColor(getResources().getColor(R.color.bright_red));
+                } else {
+                    isRed = false;
+                    view.setBackgroundColor(getResources().getColor(R.color.bright_qcom_blue));
+                }
+            }
+        });
     }
 
     private FileInputStream fileSetup()

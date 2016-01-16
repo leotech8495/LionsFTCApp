@@ -80,7 +80,15 @@ public class SimpleArmRobot extends Robot
         if (!running)
         {
             running = true;
-            timer.schedule(createNewTask(), seconds);
+            timer.schedule(new TimerTask()
+            {
+                @Override
+                public void run()
+                {
+                    setArmSpeed(0);
+                    running = false;
+                }
+            }, seconds);
         }
     }
 

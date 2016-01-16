@@ -21,15 +21,15 @@ public class LinearTest extends LinearOpMode
     public void runOpMode() throws InterruptedException
     {
         // connect
-        robot = new ExtendingArmRobot(hardwareMap, "left_side", "right_side", "extending");
-        robot.setReverseFrontRight(true);
-        robot.setReverseBackRight(true);
+//        robot = new ExtendingArmRobot(hardwareMap, "left_side", "right_side", "extending");
+//        robot.setReverseFrontRight(true);
+//        robot.setReverseBackRight(true);
 
         colorSensor = hardwareMap.colorSensor.get("nxt");
-
+        colorSensor.enableLed(true);
         waitForStart();
 
-        robot.setSpeed(0.3);
+//        robot.setSpeed(0.3);
 
         while(opModeIsActive())
         {
@@ -38,9 +38,11 @@ public class LinearTest extends LinearOpMode
             telemetry.addData("Green", colorSensor.green());
             telemetry.addData("Blue ", colorSensor.blue());
 
-            if (colorSensor.red() > 200)
+            if (colorSensor.red() > 150 || colorSensor.blue() > 150)
             {
-                robot.setSpeed(0);
+                telemetry.addData("Red", "redline");
+                telemetry.addData("Blue", "blueline");
+//                robot.setSpeed(0);
             }
             waitOneFullHardwareCycle();
         }

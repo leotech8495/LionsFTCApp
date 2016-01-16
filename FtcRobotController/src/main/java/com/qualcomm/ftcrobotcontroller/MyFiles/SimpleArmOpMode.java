@@ -19,6 +19,15 @@ public class SimpleArmOpMode extends EventOpMode
     }
 
     @Override
+    public void onAPressed(Gamepad gamepad)
+    {
+        if (gamepad == gamepad1)
+        {
+            robot.moveArmFor(200, 0.2);
+        }
+    }
+
+    @Override
     public void stop()
     {
         // stop robot just in case its still running
@@ -57,12 +66,12 @@ public class SimpleArmOpMode extends EventOpMode
         {
             if (speedLeft != 0)                 // if left trigger is pressed
             {
-                robot.setArmSpeed(speedLeft);
+                robot.setArmSpeed(0.2);
                 telemetry.addData("TriggerLeft", speedLeft);
             }
             else if (speedRight != 0)           // if right trigger is pressed
             {
-                robot.setArmSpeed(-speedRight);
+                robot.setArmSpeed(-0.2);
                 telemetry.addData("TriggerRight", speedRight);
             }
             else                                // no trigger is pressed
