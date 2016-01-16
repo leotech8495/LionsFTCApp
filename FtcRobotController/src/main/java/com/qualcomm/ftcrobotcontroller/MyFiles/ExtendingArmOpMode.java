@@ -18,6 +18,7 @@ public class ExtendingArmOpMode extends EventOpMode
     {
         // create new 2 arm robot
         robot = new ExtendingArmRobot(hardwareMap, "left_side", "right_side", "extending");
+        robot.setReverseFrontLeft(true);
     }
 
     @Override
@@ -67,12 +68,12 @@ public class ExtendingArmOpMode extends EventOpMode
         {
             if (speedLeft != 0)                 // if left trigger is pressed
             {
-                robot.setArmSpeed(0.1);
+                robot.setArmSpeed(0.5);
                 telemetry.addData("TriggerLeft", speedLeft);
             }
             else if (speedRight != 0)           // if right trigger is pressed
             {
-                robot.setArmSpeed(-0.1);
+                robot.setArmSpeed(-0.5);
                 telemetry.addData("TriggerRight", speedRight);
             }
             else                                // no trigger is pressed

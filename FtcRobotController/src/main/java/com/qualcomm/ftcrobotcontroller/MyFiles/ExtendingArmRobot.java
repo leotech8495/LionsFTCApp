@@ -60,7 +60,7 @@ public class ExtendingArmRobot extends Robot
         if (running)
             return;
 
-        mLeftSide.setMotorPower(2, (isReverseBackLeft()) ? -speed : speed);
+        mLeftSide.setMotorPower(1, (isReverseBackLeft()) ? -speed : speed);
         mLeftSide.setMotorPower(2, (isReverseFrontLeft() ? -speed : speed));
     }
 
@@ -78,7 +78,7 @@ public class ExtendingArmRobot extends Robot
 
     public void setArmSpeed(double speed)
     {
-        mExtendingArm.setMotorPower(2, speed);
+        mExtendingArm.setMotorPower(1, speed);
     }
 
     @Override
