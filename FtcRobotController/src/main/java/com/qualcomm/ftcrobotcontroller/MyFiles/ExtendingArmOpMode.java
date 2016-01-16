@@ -18,8 +18,6 @@ public class ExtendingArmOpMode extends EventOpMode
     {
         // create new 2 arm robot
         robot = new ExtendingArmRobot(hardwareMap, "left_side", "right_side", "extending");
-        robot.setReverseFrontRight(true);
-        robot.setReverseBackRight(true);
     }
 
     @Override
@@ -59,17 +57,22 @@ public class ExtendingArmOpMode extends EventOpMode
     @Override
     public void onTrigger(Gamepad gamepad, double speedLeft, double speedRight)
     {
+        if (gamepad == gamepad1)
+        {
+
+        }
+
         // on Trigger move main arm up/down
         if (gamepad == gamepad2)
         {
             if (speedLeft != 0)                 // if left trigger is pressed
             {
-                robot.setArmSpeed(0.2);
+                robot.setArmSpeed(0.1);
                 telemetry.addData("TriggerLeft", speedLeft);
             }
             else if (speedRight != 0)           // if right trigger is pressed
             {
-                robot.setArmSpeed(-0.2);
+                robot.setArmSpeed(-0.1);
                 telemetry.addData("TriggerRight", speedRight);
             }
             else                                // no trigger is pressed

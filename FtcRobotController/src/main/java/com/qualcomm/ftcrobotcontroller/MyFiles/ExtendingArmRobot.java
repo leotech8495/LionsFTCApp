@@ -60,7 +60,7 @@ public class ExtendingArmRobot extends Robot
         if (running)
             return;
 
-        mLeftSide.setMotorPower(1, (isReverseBackLeft()) ? -speed : speed);
+        mLeftSide.setMotorPower(2, (isReverseBackLeft()) ? -speed : speed);
         mLeftSide.setMotorPower(2, (isReverseFrontLeft() ? -speed : speed));
     }
 
@@ -158,23 +158,19 @@ public class ExtendingArmRobot extends Robot
         this.reverseBackRight = reverseBackRight;
     }
 
-    public boolean isReverseFrontRight()
-    {
+    public boolean isReverseFrontRight() {
         return reverseFrontRight;
     }
 
-    public void setReverseFrontRight(boolean reverseFrontRight)
-    {
+    public void setReverseFrontRight(boolean reverseFrontRight) {
         this.reverseFrontRight = reverseFrontRight;
     }
 
-    public boolean isReverseFrontLeft()
-    {
+    public boolean isReverseFrontLeft() {
         return reverseFrontLeft;
     }
 
-    public void setReverseFrontLeft(boolean reverseFrontLeft)
-    {
+    public void setReverseFrontLeft(boolean reverseFrontLeft) {
         this.reverseFrontLeft = reverseFrontLeft;
     }
 }

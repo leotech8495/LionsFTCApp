@@ -37,6 +37,7 @@ public abstract class EventOpMode extends OpMode
         onTrigger(gamepad, adjust(gamepad.left_trigger), adjust(gamepad.right_trigger));
         onLeftStick(gamepad, adjust(gamepad.left_stick_x), adjust(gamepad.left_stick_y));
         onRightStick(gamepad, adjust(gamepad.right_stick_x), adjust(gamepad.right_stick_y));
+        onAPressed(gamepad);
         if (gamepad.a)
         {
             onAPressed(gamepad);
@@ -149,6 +150,11 @@ public abstract class EventOpMode extends OpMode
      * @param gamepad
      */
     public void onAPressed(Gamepad gamepad)
+    {
+
+    }
+
+    public void onAPressed(Gamepad gamepad, boolean pressed)
     {
 
     }

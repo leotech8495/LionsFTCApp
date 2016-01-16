@@ -2,6 +2,7 @@ package com.qualcomm.ftcrobotcontroller.MyFiles;
 
 import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.ServoController;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -12,33 +13,42 @@ import java.util.TimerTask;
 public class SimpleArmRobot extends Robot
 {
     private DcMotorController mArm;
-    private DcMotorController mLeftSide;
-    private DcMotorController mRightSide;
+    private DcMotorController mExtendingMotors;
+    private DcMotorController mDriveMotors;
 
-    private boolean reverseBackLeft = false;
-    private boolean reverseBackRight = false;
+    private ServoController mServoClaw;
+
     private boolean reverseFrontRight = false;
     private boolean reverseFrontLeft = false;
+    private boolean reverseExtendingRight = false;
+    private boolean reverseExtendingLeft = false;
 
-    public SimpleArmRobot(HardwareMap hardwareMap, String leftSide, String rightSide, String extender)
+    public SimpleArmRobot(HardwareMap hardwareMap, String driveMotors, String extendingMotors, String extender)
     {
         // Connecting motors through legacy module
         mArm = hardwareMap.dcMotorController.get(extender);
 
-        mLeftSide = hardwareMap.dcMotorController.get(leftSide);
-        mRightSide = hardwareMap.dcMotorController.get(rightSide);
+        mExtendingMotors = hardwareMap.dcMotorController.get(extendingMotors);
+        mDriveMotors = hardwareMap.dcMotorController.get(driveMotors);
         // Changing run mode so we can use it (default its in "nxt mode")
         // switch to write mode, using legacy module only allows write or read at one time
         mArm.setMotorChannelMode(1, DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
         mArm.setMotorControllerDeviceMode(DcMotorController.DeviceMode.WRITE_ONLY);
 
-        mLeftSide.setMotorChannelMode(1, DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
-        mLeftSide.setMotorControllerDeviceMode(DcMotorController.DeviceMode.WRITE_ONLY);
+        mExtendingMotors.setMotorChannelMode(1, DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
+        mExtendingMotors.setMotorControllerDeviceMode(DcMotorController.DeviceMode.WRITE_ONLY);
 
-        mRightSide.setMotorChannelMode(1, DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
-        mRightSide.setMotorControllerDeviceMode(DcMotorController.DeviceMode.WRITE_ONLY);
+        mDriveMotors.setMotorChannelMode(1, DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
+        mDriveMotors.setMotorControllerDeviceMode(DcMotorController.DeviceMode.WRITE_ONLY);
+
+        mServoClaw = hardwareMap.servoController.get("claw");
 
         timer = new Timer();
+    }
+
+    public void moveServo(int number, double position)
+    {
+        mServoClaw.setServoPosition(number, position);
     }
 
     @Override
@@ -48,8 +58,8 @@ public class SimpleArmRobot extends Robot
             return;
         // TODO Figure out which side is which
 
-        mRightSide.setMotorPower(1, (isReverseBackRight() ? -speed : speed));
-        mRightSide.setMotorPower(2, (isReverseFrontRight() ? -speed : speed));
+        mDriveMotors.setMotorPower(1, (isReverseExtendingRight() ? -speed : speed));
+//        mRightSide.setMotorPower(2, (isReverseFrontRight() ? -speed : speed));
     }
 
     @Override
@@ -58,8 +68,17 @@ public class SimpleArmRobot extends Robot
         if (running)
             return;
 
-        mLeftSide.setMotorPower(1, (isReverseBackLeft()) ? -speed : speed);
-        mLeftSide.setMotorPower(2, (isReverseFrontLeft() ? -speed : speed));
+        mDriveMotors.setMotorPower(2, (isReverseFrontLeft()) ? -speed : speed);
+//        mLeftSide.setMotorPower(2, (isReverseFrontLeft() ? -speed : speed));
+    }
+
+    public void setExtendingSpeed(double speed)
+    {
+        if (running)
+            return;
+
+        mExtendingMotors.setMotorPower(1, (isReverseExtendingRight() ? -speed : speed));
+        mExtendingMotors.setMotorPower(2, (isReverseExtendingLeft()) ? -speed : speed);
     }
 
     @Override
@@ -149,16 +168,6 @@ public class SimpleArmRobot extends Robot
         }, seconds);
     }
 
-    public boolean isReverseBackRight()
-    {
-        return reverseBackRight;
-    }
-
-    public void setReverseBackRight(boolean reverseBackRight)
-    {
-        this.reverseBackRight = reverseBackRight;
-    }
-
     public boolean isReverseFrontRight()
     {
         return reverseFrontRight;
@@ -179,13 +188,19 @@ public class SimpleArmRobot extends Robot
         this.reverseFrontLeft = reverseFrontLeft;
     }
 
-    public boolean isReverseBackLeft()
-    {
-        return reverseBackLeft;
+    public boolean isReverseExtendingRight() {
+        return reverseExtendingRight;
     }
 
-    public void setReverseBackLeft(boolean reverseBackLeft)
-    {
-        this.reverseBackLeft = reverseBackLeft;
+    public void setReverseExtendingRight(boolean reverseExtendingRight) {
+        this.reverseExtendingRight = reverseExtendingRight;
+    }
+
+    public boolean isReverseExtendingLeft() {
+        return reverseExtendingLeft;
+    }
+
+    public void setReverseExtendingLeft(boolean reverseExtendingLeft) {
+        this.reverseExtendingLeft = reverseExtendingLeft;
     }
 }

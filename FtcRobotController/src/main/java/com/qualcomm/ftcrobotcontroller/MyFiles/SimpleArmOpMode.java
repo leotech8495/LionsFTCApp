@@ -14,16 +14,27 @@ public class SimpleArmOpMode extends EventOpMode
     @Override
     public void start()
     {
-        robot = new SimpleArmRobot(hardwareMap, "left_side", "right_side", "arm");
-        robot.setReverseBackRight(true);
+        robot = new SimpleArmRobot(hardwareMap, "drive", "extending", "arm");
     }
 
     @Override
     public void onAPressed(Gamepad gamepad)
     {
-        if (gamepad == gamepad1)
+//        if (gamepad == gamepad1)
+//        {
+//            robot.moveArmFor(500, 0.2);
+//        }
+    }
+
+    @Override
+    public void onAPressed(Gamepad gamepad, boolean pressed)
+    {
+        if (pressed && gamepad == gamepad1)
         {
-            robot.moveArmFor(200, 0.2);
+            robot.setArmSpeed(0.2);
+        } else
+        {
+            robot.setArmSpeed(0);
         }
     }
 
@@ -45,6 +56,11 @@ public class SimpleArmOpMode extends EventOpMode
             robot.setLeftSpeed(speedY);
             telemetry.addData("StickLeft", speedY);
         }
+
+        if (gamepad == gamepad2)
+        {
+            robot.moveServo(1, speedY);
+        }
     }
 
     @Override
@@ -56,12 +72,31 @@ public class SimpleArmOpMode extends EventOpMode
             robot.setRightSpeed(speedY);
             telemetry.addData("StickRight", speedY);
         }
+
+        if (gamepad == gamepad2)
+        {
+            robot.moveServo(2, speedY);
+        }
     }
 
     @Override
     public void onTrigger(Gamepad gamepad, double speedLeft, double speedRight)
     {
         // on Trigger move main arm up/down
+        if (gamepad == gamepad1)
+        {
+            if (speedLeft != 0)
+            {
+                robot.setExtendingSpeed(speedLeft);
+            } else if (speedRight != 0)
+            {
+                robot.setExtendingSpeed(-speedRight);
+            } else
+            {
+                robot.setExtendingSpeed(0);
+            }
+        }
+
         if (gamepad == gamepad2)
         {
             if (speedLeft != 0)                 // if left trigger is pressed
